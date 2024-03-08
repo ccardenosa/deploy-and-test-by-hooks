@@ -1,0 +1,64 @@
+- name: Using a REST API
+  vars:
+    backend_endpoint: http://localhost:28081
+    tests:
+      - name: Test-Suite-0001
+        type: suite
+        path: tests/suites/ts-0001
+        context:
+          kubeconfig: /remote/path/to/kubeconfig-cluster-1
+        tests:
+          - name: Test_A
+            type: test
+            path: test-a.sh
+            context:
+              ticks_to_reach: 1000
+          - name: Test_B
+            path: test-b.sh
+            type: test
+            context:
+              tag_to_match: "Locked..."
+      - name: Test-0002
+        type: test
+        path: tests/test-0002.sh
+        context:
+          kubeconfig: /remote/path/to/kubeconfig-cluster-2
+          data_to_be_used:
+            data_1: D1
+            data_2: D2
+            data_N: DN
+
+  block:
+
+    - name: Setup test context
+      ansible.builtin.copy:
+        dest: "{{ item.name }}.json"
+        mode: "0600"
+        content: |-
+          {{ item | to_nice_json }}
+      loop: "{{ tests }}"
+
+    - name: POST to run a test suites
+      ansible.builtin.uri:
+        url: "{{ backend_endpoint }}/run/tests"
+        method: POST
+        body_format: json
+        src: "{{ item.name }}.json"
+      # failed_when: false
+      loop: "{{ tests }}"
+
+    - name: Get results
+      ansible.builtin.uri:
+        url: "{{ backend_endpoint }}/tests/results"
+        method: GET
+      register: results
+
+    - name: Show results
+      ansible.builtin.debug:
+        var: results.json
+
+    - name: Clean up
+      ansible.builtin.file:
+        state: absent
+        path: "{{ item.name }}.json"
+      loop: "{{ tests }}"
