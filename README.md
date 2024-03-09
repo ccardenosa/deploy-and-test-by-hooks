@@ -1,6 +1,35 @@
 # Deploy and Test By Hooks
 This is a PoC to showcase the procedure
 
+## Sequence diagram
+
+```mermaid
+sequenceDiagram
+    create participant CI/CD
+    create participant eco-validation
+    CI/CD->>eco-validation: Spin up container
+    create participant eco-gotest
+    CI/CD->>eco-gotest: Spin up container
+    create participant OCP cluster
+    eco-validation->>OCP cluster: Deploy infra
+    loop Foreach eco-validation test
+        rect rgb(191, 223, 255)
+            eco-validation->>OCP cluster: Run validation tests
+            activate OCP cluster
+            rect rgb(100, 200, 150)
+                eco-validation->>eco-gotest: Run Hook test
+                activate eco-gotest
+                eco-gotest->>OCP cluster: Run test
+                OCP cluster-->>eco-gotest: Test Result
+                eco-gotest-->>eco-validation: Test Hook Result
+                deactivate eco-gotest
+            end
+            OCP cluster-->>eco-validation: Done
+            deactivate OCP cluster
+        end
+    end
+```
+
 ## Steps
 
 In on terminal:
