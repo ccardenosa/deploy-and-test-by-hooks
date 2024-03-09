@@ -32,7 +32,7 @@ sequenceDiagram
 
 ## Steps
 
-In on terminal:
+In one terminal:
 ```
 $ cd go-test/
 $ make run
