@@ -1,10 +1,10 @@
-module github.com/ccardenosa/front-back-app
+module github.com/ccardenosa/deploy-and-test-by-hooks/go-test
 
 go 1.22.1
 
-replace github.com/ccardenosa/front-back-app/backend => ./backend
+replace github.com/ccardenosa/deploy-and-test-by-hooks/go-test/backend => ./backend
 
-require github.com/ccardenosa/front-back-app/backend v0.0.0-00010101000000-000000000000
+require github.com/ccardenosa/deploy-and-test-by-hooks/go-test/backend v0.0.0-00010101000000-000000000000
 
 require (
 	github.com/bytedance/sonic v1.9.1 // indirect

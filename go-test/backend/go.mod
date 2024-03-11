@@ -1,4 +1,4 @@
-module github.com/ccardenosa/front-back-app/backend
+module github.com/ccardenosa/deploy-and-test-by-hooks/go-test/backend
 
 go 1.22.1
 

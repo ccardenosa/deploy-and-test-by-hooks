@@ -1,8 +1,8 @@
 GOCMD=go
 CUR_DIR=$(shell pwd)
-MOD_NAME=github.com/ccardenosa/front-back-app/$(shell basename $(CUR_DIR))
+MOD_NAME=github.com/ccardenosa/deploy-and-test-by-hooks/go-test/$(shell basename $(CUR_DIR))
 
-frontend:
+backend:
 	test -f go.mod || $(GOCMD) mod init $(MOD_NAME)
 	$(GOCMD) mod tidy
 

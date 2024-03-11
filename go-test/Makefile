@@ -1,5 +1,5 @@
 GOCMD=go
-MOD_NAME=github.com/ccardenosa/front-back-app
+MOD_NAME=github.com/ccardenosa/deploy-and-test-by-hooks/go-test
 
 SUBDIRS := backend 
 # SUBDIRS := $(wildcard */.)

@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ccardenosa/front-back-app/backend"
+	"github.com/ccardenosa/deploy-and-test-by-hooks/go-test/backend"
 )
 
 func TestFrontend(t *testing.T) {
